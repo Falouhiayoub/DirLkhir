@@ -33,7 +33,7 @@ export function Navbar({ user }: NavbarProps) {
         description: 'Logged out successfully',
       });
 
-      router.push('/');
+      router.push('/login');
     } catch (error) {
       toast({
         title: 'Error',
