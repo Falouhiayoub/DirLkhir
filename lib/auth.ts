@@ -52,15 +52,18 @@ export async function registerUser(
 export async function loginUser(email: string, password: string): Promise<User> {
   const user = await getUserByEmail(email);
   if (!user) {
+    console.warn('[auth] loginUser - user not found for email:', email);
     throw new Error('Invalid email or password');
   }
 
   const passwordHash = await getPasswordHash(user.id);
   if (!passwordHash) {
+    console.warn('[auth] loginUser - no password hash for user id:', user.id);
     throw new Error('Invalid email or password');
   }
 
   const isValid = await verifyPassword(password, passwordHash);
+  console.log('[auth] loginUser - verify result for user id', user.id, ':', isValid);
   if (!isValid) {
     throw new Error('Invalid email or password');
   }
