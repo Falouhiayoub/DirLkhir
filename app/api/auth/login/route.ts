@@ -3,7 +3,9 @@ import { loginUser, setSessionCookie } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const body = await request.json();
+    console.log('[api/auth/login] body:', body);
+    const { email, password } = body;
 
     // Validate required fields
     if (!email || !password) {
@@ -22,6 +24,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ user }, { status: 200 });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Login failed';
+    console.error('[api/auth/login] error:', message);
     return NextResponse.json({ error: message }, { status: 401 });
   }
 }
